@@ -8,34 +8,67 @@
 
       $(document).ready(function(){
         var $body = $('main');
+        var latestTweet;
+        var startUp;
+        var displayMostRecent = function (display) {
+          var tweet = display[display.length - 1];
+          var thisTweet = tweet.user + ' ' + tweet.message;
+          if (thisTweet != latestTweet) {
+            latestTweet = thisTweet;
+            var $tweet = $('<p></p>');
+            $tweet.html('<a class="user" href="#">' + tweet.user + '</a>: ' + tweet.message +" <br><i>" + moment(tweet.created_at).fromNow() + "</i>");
+            $tweet.appendTo($body);
+          }
+        
+        };
         var displayTweets = function (user) {
           $body.empty();
           var display = user == undefined ? streams.home : streams.users[user];
           var index = display.length - 1;
           while(index >= 0){
             var tweet = display[index];
+            latestTweet = tweet.user + ' ' + tweet.message;
             var $tweet = $('<p></p>');
             $tweet.html('<a class="user" href="#">' + tweet.user + '</a>: ' + tweet.message +" <br><i>" + moment(tweet.created_at).fromNow() + "</i>");
             $tweet.appendTo($body);
             index -= 1;
           }
+          startUp = window.setInterval(function(){displayMostRecent(display);}, 2000);
         };
+        
         displayTweets();
-        $('.refresh').on('click',function(){
+        
+
+        $('.stop').click(function(){
+          window.clearInterval(startUp);
+        });
+        $('.start').click(function(){
           displayTweets();
         });
         $('main').on('click', 'a.user', function(){
+          window.clearInterval(startUp);
           var user = $(this).text();
           displayTweets(user);
         });
       });
       
     </script>
+    <style type="text/css">
+      main {
+          background-color: #efefef;
+          padding: 10px 20px;
+          border-radius: 20px;
+      }
+      body {
+          background: lightblue;
+      }
+    </style>
   </head>
   <body>
 
     <main>
     </main>
-    <a href="#" class="refresh">Click for New Tweets</a>
+    <a style="position: fixed; top: 10px; right: 100px;"href="#" class="start">Home</a>
+    <a style="position: fixed; bottom: 50px; right: 100px;"href="#" class="stop">STOP THE FLOW!</a>
   </body>
 </html>
