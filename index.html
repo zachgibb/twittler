@@ -21,18 +21,15 @@
           }
         }
         displayTweets();
-        
-        $('.refresh').click(function(){
+        $('.refresh').on('click',function(){
           displayTweets();
         });
-        $('a.user').click(function(){
-          console.log('click!');
+        $('main').on('click', 'a.user', function(){
           var user = $(this).text();
-          console.log(user);
           displayTweets(user);
         });
-
       });
+      
     </script>
   </head>
   <body>
