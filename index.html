@@ -8,7 +8,7 @@
 
       $(document).ready(function(){
         var $body = $('main');
-        displayTweets = function (user) {
+        var displayTweets = function (user) {
           $body.empty();
           var display = user == undefined ? streams.home : streams.users[user];
           var index = display.length - 1;
@@ -19,7 +19,7 @@
             $tweet.appendTo($body);
             index -= 1;
           }
-        }
+        };
         displayTweets();
         $('.refresh').on('click',function(){
           displayTweets();
