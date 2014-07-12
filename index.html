@@ -16,7 +16,7 @@
           if (thisTweet != latestTweet) {
             latestTweet = thisTweet;
             var $tweet = $('<p></p>');
-            $tweet.html('<a class="user" href="#">' + tweet.user + '</a>: ' + tweet.message +" <br><i>" + moment(tweet.created_at).fromNow() + "</i>");
+            $tweet.html('<a class="user" href="#">' + tweet.user + '</a> ' + tweet.message +" <br><i>" + moment(tweet.created_at).fromNow() + "</i>");
             $tweet.appendTo($body);
           }
         
@@ -29,7 +29,7 @@
             var tweet = display[index];
             latestTweet = tweet.user + ' ' + tweet.message;
             var $tweet = $('<p></p>');
-            $tweet.html('<a class="user" href="#">' + tweet.user + '</a>: ' + tweet.message +" <br><i>" + moment(tweet.created_at).fromNow() + "</i>");
+            $tweet.html('<a class="user" href="#">' + tweet.user + '</a> ' + tweet.message +" <br><i>" + moment(tweet.created_at).fromNow() + "</i>");
             $tweet.appendTo($body);
             index -= 1;
           }
@@ -43,6 +43,7 @@
           window.clearInterval(startUp);
         });
         $('.start').click(function(){
+          window.clearInterval(startUp);
           displayTweets();
         });
         $('main').on('click', 'a.user', function(){
@@ -55,12 +56,32 @@
     </script>
     <style type="text/css">
       main {
-          background-color: #efefef;
+          background-color: #fafafa;
           padding: 10px 20px;
           border-radius: 20px;
+          max-width: 50%;
       }
       body {
-          background: lightblue;
+          background: slategrey;
+      }
+      .user {
+        background: midnightblue;
+        border-radius: 6px;
+        color: #fafafa;
+        text-decoration: none;
+        padding: 3px 10px;
+      }
+      .start, .stop {
+        position: fixed;
+        left: 65%; 
+        width: 20%; 
+        height: 20px; 
+        border-radius: 20px; 
+        background-color: #fafafa; 
+        color: midnightblue;
+        padding: 20px; 
+        text-align: center;
+        text-decoration: none;
       }
     </style>
   </head>
@@ -68,7 +89,7 @@
 
     <main>
     </main>
-    <a style="position: fixed; top: 10px; right: 100px;"href="#" class="start">Home</a>
-    <a style="position: fixed; bottom: 50px; right: 100px;"href="#" class="stop">STOP THE FLOW!</a>
+      <a style="top: 10px;" href="#" class="start">Home</a>
+      <a style="bottom: 50px;" href="#" class="stop">STOP THE FLOW!</a>
   </body>
 </html>
